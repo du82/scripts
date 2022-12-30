@@ -2,5 +2,5 @@
 This is a collection of scripts I've written to improve effiecency, reduce boredom, or remove complexity from the day-to-day things I do.
 
 ### Scripts
-* {payment-calculator](https://github.com/du64/scripts/payment-calculator) <br>
+* [payment-calculator](https://github.com/du64/scripts/tree/main/payout-calculator) <br>
 Stop getting screwed over and cheated out of ad revenue! Customize the script to match your ad rates, then provide a count and eCPM, and watch it calculate payment in real time!
