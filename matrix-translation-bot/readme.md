@@ -2,4 +2,4 @@ To use this bot, you simply need to change the `homeserver_url` value to the ser
 
 Then just run the main.rs file and it should work. It'll say "Ready" in the console if it's working.
 
-Requires Matrix version 1.5 or newer and Rust 2021 or newer.
+Requires Matrix homeserver on version 1.1 or newer and Rust 2021 or newer.
