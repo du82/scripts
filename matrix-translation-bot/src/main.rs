@@ -47,7 +47,7 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             println!("message sent");
         } else if text_content.body.starts_with("!t zh ") {
 
-            let api = DeepLApi::new("74429962-2d67-0175-d1be-488e187c7644:fx", false);
+            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!t zh ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::ZH).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -58,7 +58,7 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
         } else if text_content.body.starts_with("!t es ") {
-            let api = DeepLApi::new("74429962-2d67-0175-d1be-488e187c7644:fx", false);
+            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!t es ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::ES).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -69,7 +69,7 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
         } else if text_content.body.starts_with("!t fr ") {
-            let api = DeepLApi::new("74429962-2d67-0175-d1be-488e187c7644:fx", false);
+            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!t fr ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::FR).await.unwrap();
             assert!(!translated.translations.is_empty());
