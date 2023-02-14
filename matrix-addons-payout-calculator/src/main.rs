@@ -22,7 +22,7 @@ async fn authentication() {
     let client = client_builder.build().await.unwrap();
     // First we need to log in.
     client
-        .login_username(username, "Ruf2sZ1lla")
+        .login_username(username, "TYPE-YOUR-PASSWORD-HERE")
         .send()
         .await
         .unwrap();
