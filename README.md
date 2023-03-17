@@ -8,4 +8,4 @@ Stop getting cheated out of ad revenue! Customize the script to match your ad ra
 * [matrix-addons-payout-calculator](https://github.com/du64/scripts/tree/main/matrix-addons-payout-calculator) <br>
 A chat bot server for the Matrix ecosystem that lets you calculate ad revenue.
 * [matrix-translation-bot](https://github.com/du64/scripts/tree/main/matrix-translation-bot) <br>
-Have you wanted to translate between languages without leaving your Matrix client? Now you can!
+Have you wanted to translate between languages without leaving your Matrix client? Now you can! This chat bot uses the DeepL translation API for the most accurate results.
