@@ -1,0 +1,8 @@
+[package]
+name = "simple-term-gpt"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chatgpt_rs = "1.1.4"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
