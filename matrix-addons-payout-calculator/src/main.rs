@@ -17,12 +17,13 @@ async fn main() {
 }
 
 async fn authentication() {
-    let username = user_id!("@test:uxn.one");
-    let client_builder = Client::builder().homeserver_url("https://matrix.uxn.one");
+    let username = user_id!("@example:dkwc.org");
+    let password = r#"YourPasswordGoesHere"#;
+    let client_builder = Client::builder().homeserver_url("https://matrix.dkwc.org");
     let client = client_builder.build().await.unwrap();
     // First we need to log in.
     client
-        .login_username(username, "TYPE-YOUR-PASSWORD-HERE")
+        .login_username(username, password)
         .send()
         .await
         .unwrap();
@@ -54,7 +55,6 @@ async fn on_room_message(
                     + &text_content.body.replace("!dl ", ""),
             );
             room.send(content, None).await.expect("TODO: panic message");
-
             let dl: f32 = text_content
                 .body
                 .replace("!dl ", "")
@@ -69,7 +69,6 @@ async fn on_room_message(
                 "You've entered an eCPM of ".to_owned() + &text_content.body.replace("!cpm ", ""),
             );
             room.send(content, None).await.expect("TODO: panic message");
-
             let cpm: f32 = text_content
                 .body
                 .replace("!cpm ", "")
@@ -86,7 +85,6 @@ async fn on_room_message(
             let split: f32 = 0.7; // Payments split, 70/30 default
             let answer: f32 = dl / count * cpm * split;
             let output = (answer as i32).to_string();
-
             let content = RoomMessageEventContent::text_plain("You'll earn $".to_owned() + &output);
             room.send(content, None).await.expect("TODO: panic message");
         }
