@@ -115,7 +115,7 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
         } 
             // Run !help for Bot Help
             else if text_content.body.starts_with("!help") {
-            let content = RoomMessageEventContent::text_plain("type: !T [Language Code] [message to translate] || Supported Language Codes: EN, ZH, ES, FR, RU, JA"); 
+            let content = RoomMessageEventContent::text_plain("type: !T [Language Code] [message to translate] \n\nSupported Language Codes: EN, ZH, ES, FR, RU, JA"); 
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
