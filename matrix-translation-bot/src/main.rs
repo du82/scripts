@@ -35,9 +35,11 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
         let MessageType::Text(text_content) = event.content.msgtype else {
             return;
         };
+            let deepl_api_key = "YOUR_DEEPL_API_KEY";
+            
             // MANDARIN (SIMPLIFIED) => ENGLISH
             if text_content.body.starts_with("!T EN ") {
-            let api = DeepLApi::new("YOUR_DEEPL_KEY", false);
+            let api = DeepLApi::new(deepl_api_key, false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!T EN ", "");
             let translated = api.translate(&pre_translated, Some(Lang::ZH), Lang::EN).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -48,9 +50,9 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
         }   
-            // ENGLISH => MANDARAIN (SIMPLIFIED)
+            // ENGLISH => MANDARIN (SIMPLIFIED)
             else if text_content.body.starts_with("!T ZH ") {
-            let api = DeepLApi::new("YOUR_DEEPL_KEY", false);
+            let api = DeepLApi::new(deepl_api_key, false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!T ZH ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::ZH).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -61,9 +63,9 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
         }   
-            // EGNLISH => SPANISH
+            // ENGLISH => SPANISH
             else if text_content.body.starts_with("!T ES ") {
-            let api = DeepLApi::new("YOUR_DEEPL_KEY", false);
+            let api = DeepLApi::new(deepl_api_key, false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!T ES ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::ES).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -74,9 +76,9 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
         }   
-            // ENGLISH => FRENCH
+            // ENGLIH => FRENCH
             else if text_content.body.starts_with("!T FR ") {
-            let api = DeepLApi::new("YOUR_DEEPL_KEY", false);
+            let api = DeepLApi::new(deepl_api_key, false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!T FR ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::FR).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -89,7 +91,7 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
         } 
             // ENGLISH => RUSSIAN 
             else if text_content.body.starts_with("!T RU ") {
-            let api = DeepLApi::new("YOUR_DEEPL_KEY", false);
+            let api = DeepLApi::new(deepl_api_key, false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!T RU ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::RU).await.unwrap();
             assert!(!translated.translations.is_empty());
@@ -99,12 +101,12 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
-        }   
+        } 
             // ENGLISH => JAPANESE
             else if text_content.body.starts_with("!T JA ") {
-            let api = DeepLApi::new("YOUR_DEEPL_KEY", false);
+            let api = DeepLApi::new(deepl_api_key, false);
             let pre_translated = "".to_owned() + &text_content.body.replace("!T JA ", "");
-            let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::RU).await.unwrap();
+            let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::JA).await.unwrap();
             assert!(!translated.translations.is_empty());
             let sentences = translated.translations;
             println!("{}", sentences[0].text);
