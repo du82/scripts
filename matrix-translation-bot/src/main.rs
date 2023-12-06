@@ -1,6 +1,6 @@
 use matrix_sdk::{
     Client, config::SyncSettings,
-    ruma::{user_id},
+    ruma::{user_id, api::client::uiaa::Password},
 };
 use matrix_sdk::room::Room;
 use matrix_sdk::ruma::_macros::room_id;
@@ -15,12 +15,14 @@ async fn main() {
 }
 
 async fn authentication() {
-    let username = user_id!("@test:uxn.one");
-    let client_builder = Client::builder().homeserver_url("https://matrix.uxn.one");
+    // Set up your own matrix translation bot! Make a new account. Add the login credentials here. Add your DeepL key below.
+    let username = user_id!("YOUR_USERNAME");
+    let password = "YOUR_PASSWORD";
+    let client_builder = Client::builder().homeserver_url("https://YOUR_SERVER");
     let client = client_builder.build().await.unwrap();
     // First we need to log in.
-    client.login_username(username, "YOUR_BOTS_PASSWORD").send().await.unwrap();
-    println!(">> Logged in <<");
+    client.login_username(username, password).send().await.unwrap();
+    println!(">> Logged in to Matrix Account <<");
     // Call on_room_message to handle the messages.
     client.add_event_handler(on_room_message);
     println!(">> Ready <<\n");
@@ -33,11 +35,13 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
         let MessageType::Text(text_content) = event.content.msgtype else {
             return;
         };
-        if text_content.body.starts_with("!t en ") {
-
-            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
-            let pre_translated = "".to_owned() + &text_content.body.replace("!t en ", "");
-            let translated = api.translate(&pre_translated, Some(Lang::DE), Lang::EN).await.unwrap();
+            let deepl_api_key = "YOUR_DEEPL_API_KEY";
+            
+            // MANDARIN (SIMPLIFIED) => ENGLISH
+            if text_content.body.starts_with("!T EN ") {
+            let api = DeepLApi::new(deepl_api_key, false);
+            let pre_translated = "".to_owned() + &text_content.body.replace("!T EN ", "");
+            let translated = api.translate(&pre_translated, Some(Lang::ZH), Lang::EN).await.unwrap();
             assert!(!translated.translations.is_empty());
             let sentences = translated.translations;
             println!("{}", sentences[0].text);
@@ -45,10 +49,11 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
-        } else if text_content.body.starts_with("!t zh ") {
-
-            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
-            let pre_translated = "".to_owned() + &text_content.body.replace("!t zh ", "");
+        }   
+            // ENGLISH => MANDARIN (SIMPLIFIED)
+            else if text_content.body.starts_with("!T ZH ") {
+            let api = DeepLApi::new(deepl_api_key, false);
+            let pre_translated = "".to_owned() + &text_content.body.replace("!T ZH ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::ZH).await.unwrap();
             assert!(!translated.translations.is_empty());
             let sentences = translated.translations;
@@ -57,9 +62,11 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
-        } else if text_content.body.starts_with("!t es ") {
-            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
-            let pre_translated = "".to_owned() + &text_content.body.replace("!t es ", "");
+        }   
+            // ENGLISH => SPANISH
+            else if text_content.body.starts_with("!T ES ") {
+            let api = DeepLApi::new(deepl_api_key, false);
+            let pre_translated = "".to_owned() + &text_content.body.replace("!T ES ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::ES).await.unwrap();
             assert!(!translated.translations.is_empty());
             let sentences = translated.translations;
@@ -68,9 +75,11 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
-        } else if text_content.body.starts_with("!t fr ") {
-            let api = DeepLApi::new("YOUR_DEEPL_API_KEY", false);
-            let pre_translated = "".to_owned() + &text_content.body.replace("!t fr ", "");
+        }   
+            // ENGLIH => FRENCH
+            else if text_content.body.starts_with("!T FR ") {
+            let api = DeepLApi::new(deepl_api_key, false);
+            let pre_translated = "".to_owned() + &text_content.body.replace("!T FR ", "");
             let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::FR).await.unwrap();
             assert!(!translated.translations.is_empty());
             let sentences = translated.translations;
@@ -79,11 +88,41 @@ async fn on_room_message(event: OriginalSyncRoomMessageEvent, room: Room) {
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
-        } else if text_content.body.starts_with("!bothelp") {
-            let content = RoomMessageEventContent::text_plain("Type !t followed by what you want to translate.");
+        } 
+            // ENGLISH => RUSSIAN 
+            else if text_content.body.starts_with("!T RU ") {
+            let api = DeepLApi::new(deepl_api_key, false);
+            let pre_translated = "".to_owned() + &text_content.body.replace("!T RU ", "");
+            let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::RU).await.unwrap();
+            assert!(!translated.translations.is_empty());
+            let sentences = translated.translations;
+            println!("{}", sentences[0].text);
+            let content = RoomMessageEventContent::text_plain("".to_owned() + &sentences[0].text);
             println!("sending");
             room.send(content, None).await.expect("TODO: panic message");
             println!("message sent");
-        }
+        } 
+            // ENGLISH => JAPANESE
+            else if text_content.body.starts_with("!T JA ") {
+            let api = DeepLApi::new(deepl_api_key, false);
+            let pre_translated = "".to_owned() + &text_content.body.replace("!T JA ", "");
+            let translated = api.translate(&pre_translated, Some(Lang::EN), Lang::JA).await.unwrap();
+            assert!(!translated.translations.is_empty());
+            let sentences = translated.translations;
+            println!("{}", sentences[0].text);
+            let content = RoomMessageEventContent::text_plain("".to_owned() + &sentences[0].text);
+            println!("sending");
+            room.send(content, None).await.expect("TODO: panic message");
+            println!("message sent");
+        } 
+            // Run !help for Bot Help
+            else if text_content.body.starts_with("!help") {
+            let content = RoomMessageEventContent::text_plain("type: !T [Language Code] [message to translate] \n\nSupported Language Codes: EN, ZH, ES, FR, RU, JA"); 
+            println!("sending");
+            room.send(content, None).await.expect("TODO: panic message");
+            println!("message sent");
+        } {
+    
+}
     }
 }
